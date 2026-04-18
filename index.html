@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task 4</title>
+
+    <style>
+        .hide {
+            display: none !important;
+        }
+
+        .err {
+            padding: 20px;
+            background-color: #ff9090;
+        }
+
+        .done {
+            padding: 20px;
+            background-color: #aaff90;
+        }
+        .del {
+            padding: 20px;
+            background-color: #fffb90;
+        }
+
+        button {
+            padding: 10px;
+            font-size: 20px;
+        }
+
+        #del {
+            background-color: #ff9090;
+            border: none;
+        }
+
+        #del:hover {
+            background-color: #dc2525;
+            border: none;
+            color: #fff;
+            font-size: 18px;
+            border-radius: 15px;
+            cursor: pointer;
+        }
+
+        #add {
+            background-color: #aaff90;
+            border: none;
+            border-radius: 17px;
+
+        }
+
+        #add:hover {
+            border: none;
+            color: #444;
+            font-size: 22px;
+            border: 2px solid #444;
+            cursor: pointer;
+        }
+
+        input {
+            padding: 5px 10px;
+            font-size: 20px;
+            border: none;
+        }
+
+        input:focus {
+            outline: none;
+            border: 1px solid #aaff90;
+
+        }
+
+        body {
+            text-align: center;
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: blanchedalmond;
+        }
+    </style>
+
+</head>
+
+<body>
+    <h1 id="name">Your name</h1>
+    <input type="text" id="input" placeholder="Type your name...">
+    <button id="add">Add Name</button>
+    <button class="hide" id="del">Delete name</button>
+    <p id="resoult"></p>
+
+    <script>
+        let name_dom = document.querySelector("#name")
+        let input = document.querySelector("#input")
+        let btn = document.querySelector("#add")
+        let del = document.querySelector("#del")
+        let res = document.querySelector("p")
+
+        let get_name = localStorage.getItem("name")
+        if (!get_name || get_name == "") {
+            name_dom.textContent = "Please enter your name!"
+            input.classList.remove("hide")
+            btn.classList.remove("hide")
+            del.classList.add("hide")
+        }
+        else {
+            name_dom.textContent = get_name
+            input.classList.add("hide")
+            btn.classList.add("hide")
+            del.classList.remove("hide")
+        }
+
+        function addName() {
+            let name = input.value
+            if (name == "") {
+                res.textContent = "Please enter you ranme to input bar!!!"
+                res.classList.add("err")
+            }
+            else {
+                localStorage.setItem("name", name)
+                name_dom.textContent = `Wellcom ${name}`
+                res.textContent = "Your name is saved perfectly"
+                res.classList.add("done")
+                input.classList.add("hide")
+                btn.classList.add("hide")
+                del.classList.remove("hide")
+                input.value = ""
+            }
+        }
+        function delName() {
+            localStorage.removeItem("name")
+            name_dom.textContent = "Please enter your name!"
+            input.classList.remove("hide")
+            btn.classList.remove("hide")
+            del.classList.add("hide")
+            res.textContent = "Your name is removed perfectly!"
+            res.classList.add("del")
+        }
+
+
+        btn.addEventListener("click", addName)
+        del.addEventListener("click", delName)
+
+    </script>
+</body>
+
+</html>
